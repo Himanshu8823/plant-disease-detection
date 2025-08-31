@@ -33,18 +33,16 @@ A comprehensive React Native Expo application for plant disease detection using 
 - **React Native**: 0.74.5
 - **Expo**: 51.0.38
 - **Expo Router**: File-based navigation
-- **NativeWind**: Tailwind CSS for React Native
-- **Lottie**: Smooth animations
 - **React Native Paper**: Material Design components
 - **AsyncStorage**: Local data persistence
 - **Axios**: HTTP client
 - **Socket.IO Client**: Real-time communication
+- **Lottie**: Smooth animations
 
 ### Backend (Node.js)
 - **Express.js**: Web framework
 - **Firebase Admin**: Authentication and database
 - **Socket.IO**: Real-time communication
-- **Multer**: File upload handling
 - **JWT**: Token-based authentication
 - **Helmet**: Security middleware
 - **Rate Limiting**: API protection
@@ -78,9 +76,9 @@ A comprehensive React Native Expo application for plant disease detection using 
    cd plant-disease-detector-pro
    ```
 
-2. **Install dependencies**
+2. **Install dependencies** ⚡ **Fast Installation**
    ```bash
-   # Install all dependencies (frontend + backend)
+   # Install all dependencies (optimized for speed)
    npm run install:all
    
    # Or install separately:
@@ -255,7 +253,7 @@ plant-disease-detector-pro/
 │   │   └── animations/      # Lottie animation files
 │   ├── .env                 # Frontend environment variables
 │   ├── app.json             # Expo configuration
-│   ├── package.json         # Frontend dependencies
+│   ├── package.json         # Frontend dependencies (optimized)
 │   ├── tailwind.config.js   # Tailwind CSS configuration
 │   └── babel.config.js      # Babel configuration
 ├── working-backend/         # Node.js backend
@@ -272,7 +270,7 @@ plant-disease-detector-pro/
 │   ├── utils/               # Utility functions
 │   ├── .env                 # Backend environment variables
 │   ├── server.js            # Main server file
-│   ├── package.json         # Backend dependencies
+│   ├── package.json         # Backend dependencies (optimized)
 │   └── .env.example         # Backend environment template
 ├── package.json             # Root package.json with scripts
 ├── setup.js                 # Setup script for environment variables
@@ -339,13 +337,11 @@ The app uses a green-white theme. To customize colors:
 ## 🧪 Testing
 
 ```bash
-# Run frontend tests
-cd frontend
-npm test
+# Start development servers
+npm run dev
 
-# Run backend tests
-cd working-backend
-npm test
+# Test backend health
+curl http://localhost:5000/api/health
 ```
 
 ## 📦 Building for Production
