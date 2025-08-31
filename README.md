@@ -190,8 +190,6 @@ plant-disease-detector-pro/
 │   │   ├── images/          # App images and icons
 │   │   ├── fonts/           # Custom fonts
 │   │   └── animations/      # Lottie animation files
-│   ├── components/          # Reusable components
-│   ├── utils/               # Utility functions
 │   ├── app.json             # Expo configuration
 │   ├── package.json         # Frontend dependencies
 │   ├── tailwind.config.js   # Tailwind CSS configuration

@@ -132,11 +132,11 @@ plant-disease-detector-pro/
 ├── frontend/                 # React Native Expo app
 │   ├── app/                 # All app screens
 │   ├── assets/              # Images, fonts, animations
-│   └── components/          # Reusable components
+│   └── app.json             # Expo configuration
 ├── working-backend/         # Node.js backend
 │   ├── routes/              # API endpoints
 │   ├── middleware/          # Custom middleware
-│   └── utils/               # Utility functions
+│   └── server.js            # Main server file
 ├── package.json             # Root scripts
 ├── setup.js                 # Setup wizard
 └── README.md                # Full documentation
