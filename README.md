@@ -187,12 +187,15 @@ plant-disease-detector-pro/
 │   │   ├── signup.js        # Signup screen
 │   │   └── contactus.js     # Contact support
 │   ├── assets/              # Images, fonts, animations
+│   │   ├── images/          # App images and icons
+│   │   ├── fonts/           # Custom fonts
+│   │   └── animations/      # Lottie animation files
 │   ├── components/          # Reusable components
-│   ├── navigation/          # Navigation components
 │   ├── utils/               # Utility functions
 │   ├── app.json             # Expo configuration
 │   ├── package.json         # Frontend dependencies
-│   └── tailwind.config.js   # Tailwind CSS configuration
+│   ├── tailwind.config.js   # Tailwind CSS configuration
+│   └── babel.config.js      # Babel configuration
 ├── working-backend/         # Node.js backend
 │   ├── routes/              # API routes
 │   │   ├── auth.js          # Authentication routes
@@ -206,11 +209,13 @@ plant-disease-detector-pro/
 │   ├── middleware/          # Custom middleware
 │   ├── utils/               # Utility functions
 │   ├── server.js            # Main server file
-│   └── package.json         # Backend dependencies
+│   ├── package.json         # Backend dependencies
+│   └── .env.example         # Backend environment template
 ├── package.json             # Root package.json with scripts
 ├── setup.js                 # Setup script for environment variables
 ├── README.md                # This file
-└── QUICKSTART.md            # Quick start guide
+├── QUICKSTART.md            # Quick start guide
+└── .env.example             # Frontend environment template
 ```
 
 ## 🔌 API Endpoints

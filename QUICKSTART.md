@@ -1,178 +1,212 @@
 # 🚀 Quick Start Guide
 
-Get your Plant Disease Detector Pro up and running in minutes!
+Get your Plant Disease Detector Pro app up and running in minutes!
 
-## ⚡ Super Quick Setup (5 minutes)
+## 📋 Prerequisites
 
-### 1. Clone & Install
+Before you begin, make sure you have the following installed:
+
+- **Node.js** (v18 or higher) - [Download here](https://nodejs.org/)
+- **npm** or **yarn** - Comes with Node.js
+- **Expo CLI** - Install globally: `npm install -g @expo/cli`
+- **Expo Go app** - Download from [App Store](https://apps.apple.com/app/expo-go/id982107779) or [Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent)
+
+## ⚡ Quick Setup
+
+### 1. Clone and Install
+
 ```bash
-git clone https://github.com/your-username/plant-disease-detector-pro.git
+# Clone the repository
+git clone <repository-url>
 cd plant-disease-detector-pro
+
+# Install all dependencies
 npm run install:all
 ```
 
-### 2. Configure Environment
+### 2. Set Up Environment Variables
+
 ```bash
+# Run the automated setup script
 npm run setup
 ```
-Follow the prompts to enter your API keys.
 
-### 3. Start Development
+This will guide you through entering:
+- ✅ Firebase configuration
+- ✅ Kindwise API key (plant disease detection)
+- ✅ Google Gemini AI key (chat functionality)
+- ✅ OpenWeatherMap API key (weather data)
+
+### 3. Start Development Servers
+
 ```bash
+# Start both frontend and backend
 npm run dev
 ```
 
-### 4. Open Your App
-- **Mobile**: Scan QR code with Expo Go app
-- **Web**: Open http://localhost:3000
-- **iOS Simulator**: Press `i` in terminal
-- **Android Emulator**: Press `a` in terminal
+This will start:
+- 🖥️ **Backend server** on `http://localhost:5000`
+- 📱 **Expo development server** on `http://localhost:8081`
 
-## 🔑 Required API Keys
+### 4. Run on Your Device
 
-### Firebase (Authentication & Database)
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Create a new project
-3. Enable Authentication (Email/Password)
-4. Create a Firestore database
-5. Add a web app to get your config
-6. Download service account key for backend
+#### Option A: Physical Device (Recommended)
+1. Install **Expo Go** app on your phone
+2. Scan the QR code that appears in your terminal
+3. The app will load on your device!
 
-### Kindwise API (Plant Disease Detection)
-1. Sign up at [Kindwise](https://kindwise.com/)
-2. Get your API key from dashboard
-3. Add to setup wizard
-
-### Google Gemini AI (Chat System)
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Create a new API key
-3. Add to setup wizard
-
-### OpenWeatherMap (Weather Data)
-1. Sign up at [OpenWeatherMap](https://openweathermap.org/api)
-2. Get your free API key
-3. Add to setup wizard
-
-## 📱 Running on Device
-
-### Android
+#### Option B: Simulator/Emulator
 ```bash
-# Install Expo Go from Google Play Store
-npm run android
-```
-
-### iOS
-```bash
-# Install Expo Go from App Store
+# For iOS (macOS only)
 npm run ios
-```
 
-### Web
-```bash
+# For Android
+npm run android
+
+# For web browser
 npm run web
 ```
 
-## 🔧 Development Commands
+## 🔑 Getting API Keys
 
-### Start Both Frontend & Backend
+### Firebase Setup
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Create a new project
+3. Enable **Authentication** and **Firestore**
+4. Add a web app to get configuration
+5. Go to Project Settings → Service Accounts → Generate new private key
+
+### Kindwise API
+1. Visit [Kindwise](https://kindwise.com)
+2. Sign up for an account
+3. Get your API key from the dashboard
+
+### Google Gemini AI
+1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create a new API key
+3. Copy the key for the setup script
+
+### OpenWeatherMap
+1. Sign up at [OpenWeatherMap](https://openweathermap.org/api)
+2. Get your free API key
+3. Note: Free tier has rate limits
+
+## 📱 Testing the App
+
+Once everything is running:
+
+1. **Home Screen**: See the main dashboard with quick actions
+2. **Disease Detection**: Take a photo of a plant to test detection
+3. **Weather**: Check local weather information
+4. **Chat**: Try the AI expert chat feature
+5. **Analytics**: View your detection statistics
+
+## 🛠️ Development Commands
+
 ```bash
-npm run dev
+# Install dependencies
+npm run install:all          # Install all
+npm run install:frontend     # Frontend only
+npm run install:backend      # Backend only
+
+# Start servers
+npm run dev                  # Both frontend and backend
+npm run start:frontend       # Frontend only
+npm run start:backend        # Backend only
+
+# Run on specific platforms
+npm run ios                  # iOS simulator
+npm run android              # Android emulator
+npm run web                  # Web browser
+
+# Development utilities
+npm run setup                # Environment setup
+npm run clean                # Clean node_modules
+npm run reset                # Clean and reinstall
 ```
 
-### Start Separately
-```bash
-# Backend only
-npm run start:backend
+## 📁 Project Structure
 
-# Frontend only  
-npm run start:frontend
+```
+plant-disease-detector-pro/
+├── frontend/                 # React Native Expo app
+│   ├── app/                 # All app screens
+│   ├── assets/              # Images, fonts, animations
+│   └── components/          # Reusable components
+├── working-backend/         # Node.js backend
+│   ├── routes/              # API endpoints
+│   ├── middleware/          # Custom middleware
+│   └── utils/               # Utility functions
+├── package.json             # Root scripts
+├── setup.js                 # Setup wizard
+└── README.md                # Full documentation
 ```
 
-### Testing
-```bash
-# All tests
-npm test
-
-# Frontend tests
-npm run test:frontend
-
-# Backend tests
-npm run test:backend
-```
-
-## 🐛 Troubleshooting
+## 🔧 Troubleshooting
 
 ### Common Issues
 
-#### "Module not found" errors
-```bash
-npm run reset
-```
-
-#### Port already in use
-```bash
-# Kill process on port 5000
-lsof -ti:5000 | xargs kill -9
-```
-
-#### Expo CLI not found
+**"Expo CLI not found"**
 ```bash
 npm install -g @expo/cli
 ```
 
-#### Firebase connection issues
-- Check your Firebase project settings
-- Verify API keys in `.env` files
-- Ensure Firestore rules allow read/write
-
-#### API key errors
-- Verify all API keys are correct
-- Check API quotas and billing
-- Ensure keys have proper permissions
-
-### Reset Everything
+**"Port 5000 already in use"**
 ```bash
-npm run clean
-npm run install:all
-npm run setup
+# Kill the process using port 5000
+lsof -ti:5000 | xargs kill -9
 ```
 
-## 📊 What's Next?
+**"Metro bundler error"**
+```bash
+# Clear Metro cache
+npx expo start --clear
+```
 
-### Explore Features
-1. **Disease Detection**: Take photos of plants to detect diseases
-2. **AI Chat**: Ask the AI expert about plant care
-3. **Weather**: Check local weather and plant recommendations
-4. **Analytics**: View your detection history and statistics
-5. **Profile**: Manage your account and preferences
+**"Backend connection failed"**
+- Check if backend is running: `npm run start:backend`
+- Verify API URL in frontend environment variables
+- Check firewall settings
 
-### Customize
-- Modify colors in `frontend/tailwind.config.js`
-- Add new screens in `frontend/app/`
-- Extend API endpoints in `backend/routes/`
-- Update database schema in Firebase
+**"API key errors"**
+- Verify all API keys are correctly set in `.env` files
+- Check API key permissions and quotas
+- Ensure keys are not expired
 
-### Deploy
-- **Frontend**: Use Expo EAS Build for app stores
-- **Backend**: Deploy to Heroku, Vercel, or AWS
-- **Database**: Firebase handles this automatically
+### Getting Help
 
-## 🆘 Need Help?
+- 📖 **Full Documentation**: See [README.md](README.md)
+- 🐛 **Report Issues**: Create an issue on GitHub
+- 💬 **Community**: Join our discussions
+- 📧 **Email**: support@plantdiseasedetector.com
 
-- 📖 **Full Documentation**: [README.md](README.md)
-- 💬 **Community**: [GitHub Discussions](https://github.com/your-username/plant-disease-detector-pro/discussions)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/your-username/plant-disease-detector-pro/issues)
-- 📧 **Email**: support@plantdetector.com
+## 🎯 What's Next?
 
-## 🎯 Quick Tips
+After getting the app running:
 
-- Use the setup wizard for easy configuration
-- Keep your API keys secure and never commit them
-- Test on both iOS and Android devices
-- Use the AI chat for plant care questions
-- Check weather before applying treatments
-- Export your data regularly
+1. **Explore Features**: Try all the different screens and features
+2. **Customize**: Modify colors, add your own branding
+3. **Add Features**: Extend the app with new functionality
+4. **Deploy**: Build for production and deploy to app stores
+5. **Contribute**: Help improve the app by contributing code
+
+## 🚀 Production Deployment
+
+### Frontend (Mobile Apps)
+```bash
+cd frontend
+eas build --platform ios
+eas build --platform android
+```
+
+### Backend
+```bash
+cd working-backend
+# Deploy to your preferred platform (Heroku, Railway, etc.)
+```
 
 ---
 
-**Ready to detect some plant diseases? 🌱 Let's go!**
+**Happy coding! 🌱**
+
+Need more help? Check the full [README.md](README.md) for detailed documentation.
