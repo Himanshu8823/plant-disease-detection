@@ -4,17 +4,19 @@
   "description": "A comprehensive plant disease detection application with AI-powered analysis",
   "main": "index.js",
   "scripts": {
-    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "install:all": "npm install && cd frontend && npm install && cd ../working-backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd working-backend && npm install",
     "start:frontend": "cd frontend && npm start",
-    "start:backend": "cd backend && npm run dev",
+    "start:backend": "cd working-backend && npm run dev",
     "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "build:frontend": "cd frontend && npm run build",
-    "build:backend": "cd backend && npm run build",
+    "build:backend": "cd working-backend && npm run build",
     "test": "npm run test:frontend && npm run test:backend",
     "test:frontend": "cd frontend && npm test",
-    "test:backend": "cd backend && npm test",
+    "test:backend": "cd working-backend && npm test",
     "setup": "node setup.js",
-    "clean": "rm -rf node_modules frontend/node_modules backend/node_modules",
+    "clean": "rm -rf node_modules frontend/node_modules working-backend/node_modules",
     "reset": "npm run clean && npm run install:all"
   },
   "keywords": [
@@ -24,6 +26,7 @@
     "ai",
     "machine-learning",
     "react-native",
+    "expo",
     "nodejs",
     "firebase",
     "gemini",
@@ -35,7 +38,7 @@
     "concurrently": "^8.2.2"
   },
   "engines": {
-    "node": ">=16.0.0",
+    "node": ">=18.0.0",
     "npm": ">=8.0.0"
   },
   "repository": {
