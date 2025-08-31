@@ -51,38 +51,7 @@ const Detection = () => {
         }
     };
 
-    const fetchDataFromGemini = async (plant: string, disease: string) => {
-        const prompt = `
-            Provide detailed symptoms and diagnosis for the disease "${disease}" affecting the plant "${plant}". 
-            Please structure the response as follows:
-            * Symptoms:
-            1. 
-            2. 
-            3. 
-            * Diagnosis:
-            1. 
-            2. 
-            3. 
-        `;
 
-        try {
-            const response = await axios.post('https://agricultureapp.onrender.com/get-disease-info', {
-                plantName: plant,
-                diseaseName: disease,
-                prompt: prompt,
-            });
-            return {
-                plantName: plant,
-                diseaseName: disease,
-                scientificName: response.data.scientificName,
-                diseaseInfo: response.data.info,
-            };
-        } catch (error) {
-            Alert.alert('Error', 'Failed to fetch disease information.');
-            console.error(error);
-            return null;
-        }
-    };
 
     const analyzeImage = async () => {
         if (!image) {
@@ -97,42 +66,55 @@ const Detection = () => {
                 encoding: FileSystem.EncodingType.Base64,
             });
 
-            const requestBody = {
-                images: [`data:image/jpeg;base64,${base64Image}`],
-                latitude: 49.207,
-                longitude: 16.608,
-                similar_images: true,
-            };
-
-            const identificationResponse = await axios.post(
-                'https://crop.kindwise.com/api/v1/identification',
-                requestBody,
+            // Call our backend API instead of directly calling Kindwise
+            const response = await axios.post(
+                'http://localhost:5000/api/detection/analyze',
+                {
+                    image: base64Image,
+                    latitude: 49.207,
+                    longitude: 16.608,
+                },
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Api-Key': 'UBdSa4EvAfLvKOZGY1wvIJ9Poukab9akH3glrUSiPnHVTYDlKH', 
-                        
                     },
+                    timeout: 60000, // 60 second timeout
                 }
             );
-            
-            const plantName = identificationResponse.data.result.crop.suggestions[0].name;
-            const diseaseName = identificationResponse.data.result.disease.suggestions[0].name;
-            const scientificName = identificationResponse.data.result.disease.suggestions[0].probability;
-            const diseaseData = await fetchDataFromGemini(plantName, diseaseName);
-            let s = Number(scientificName);
-            s = s* 100;
-            setScientificName(String(s));
 
-            if (diseaseData) {
-                setPlantName(diseaseData.plantName);
-                setDiseaseName(diseaseData.diseaseName);
+            if (response.data.success) {
+                const result = response.data.data;
+                setPlantName(result.plant.name);
+                setDiseaseName(result.disease.name);
+                setScientificName(result.disease.confidence.toFixed(1));
                 
-                setDiseaseInfo(diseaseData.diseaseInfo);
+                // Format disease info from the structured response
+                const formattedInfo = `
+Symptoms:
+${result.disease.symptoms.map(s => `• ${s}`).join('\n')}
+
+Diagnosis:
+${result.disease.diagnosis.map(d => `• ${d}`).join('\n')}
+
+Treatment:
+${result.disease.treatment.map(t => `• ${t}`).join('\n')}
+
+Prevention:
+${result.disease.prevention.map(p => `• ${p}`).join('\n')}
+                `;
+                setDiseaseInfo(formattedInfo);
+            } else {
+                throw new Error(response.data.message || 'Analysis failed');
             }
         } catch (error) {
-            console.error(error);
-            Alert.alert('Error', 'Error analyzing image. Please try again.');
+            console.error('Detection error:', error);
+            if (error.response?.status === 401) {
+                Alert.alert('Error', 'Invalid API key. Please contact support.');
+            } else if (error.code === 'ECONNABORTED') {
+                Alert.alert('Error', 'Request timeout. Please try again.');
+            } else {
+                Alert.alert('Error', 'Error analyzing image. Please try again.');
+            }
         } finally {
             setLoading(false);
             setModalVisible(false);

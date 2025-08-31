@@ -1,43 +1,57 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons';
+import { useColorScheme } from 'react-native';
+
+// Import screens
 import Home from '../app/home';
 import Detection from '../app/detection';
-import { Ionicons } from '@expo/vector-icons';
-import ContactUs from '@/app/contactus';
+import Weather from '../app/weather';
+import Analytics from '../app/analytics';
+import Profile from '../app/profile';
+import Settings from '../app/settings';
+import Login from '../app/login';
+import Signup from '../app/signup';
+import ContactUs from '../app/contactus';
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+
   return (
     <Drawer.Navigator
       screenOptions={{
         drawerStyle: {
-          backgroundColor: '#228B22', // Change this to your desired color
-          width: 240, // Set the width if needed
+          backgroundColor: isDark ? '#1e293b' : '#f0fdf4',
+          width: 280,
         },
-        drawerActiveBackgroundColor: "skyblue",
+        drawerActiveBackgroundColor: '#22c55e',
+        drawerActiveTintColor: '#ffffff',
+        drawerInactiveTintColor: isDark ? '#64748b' : '#374151',
         drawerLabelStyle: {
-          color: 'white', // Change this to the desired color for the drawer item labels
-          fontWeight: 'bold', // Optional: make the text bold
-          marginTop:10,
-          
-          fontSize:17
+          fontWeight: '600',
+          fontSize: 16,
+          marginLeft: -10,
         },
-        
+        headerStyle: {
+          backgroundColor: '#22c55e',
+        },
+        headerTintColor: '#ffffff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
       }}
     >
       <Drawer.Screen
         name="home"
         component={Home}
         options={{
-          headerTintColor: 'white',
-          headerStyle: {
-            backgroundColor: 'green',
-            
-          },
-          drawerLabel: "Home",
+          drawerLabel: "Dashboard",
+          title: "Plant Disease Detector",
           drawerIcon: ({ size, color }) => (
-            <Ionicons name='home-outline' size={size} color='white' style={{marginTop:10}}/>
+            <Ionicons name='grid-outline' size={size} color={color} />
           ),
         }}
       />
@@ -45,27 +59,87 @@ export default function DrawerNavigator() {
         name="detection"
         component={Detection}
         options={{
-          headerTintColor: 'white',
-          headerStyle: {
-            backgroundColor: "green",
-          },
-          drawerLabel: "Detection",
+          drawerLabel: "Disease Detection",
+          title: "Plant Disease Detection",
           drawerIcon: ({ size, color }) => (
-            <Ionicons name='eye' size={size} color='white' style={{marginTop:10}}/>
+            <Ionicons name='camera-outline' size={size} color={color} />
           ),
         }}
       />
       <Drawer.Screen
-        name='contactus'
+        name="weather"
+        component={Weather}
+        options={{
+          drawerLabel: "Weather & Agriculture",
+          title: "Weather & Agriculture",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name='partly-sunny-outline' size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="analytics"
+        component={Analytics}
+        options={{
+          drawerLabel: "Analytics & Insights",
+          title: "Analytics & Insights",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name='analytics-outline' size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="profile"
+        component={Profile}
+        options={{
+          drawerLabel: "Profile",
+          title: "User Profile",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name='person-outline' size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="settings"
+        component={Settings}
+        options={{
+          drawerLabel: "Settings",
+          title: "Settings",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name='settings-outline' size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="login"
+        component={Login}
+        options={{
+          drawerLabel: "Login",
+          title: "Login",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name='log-in-outline' size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="signup"
+        component={Signup}
+        options={{
+          drawerLabel: "Sign Up",
+          title: "Sign Up",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name='person-add-outline' size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="contactus"
         component={ContactUs}
         options={{
-          headerTintColor: "white",
-          headerStyle: {
-            backgroundColor: "green",
-          },
           drawerLabel: "Contact Us",
+          title: "Contact Us",
           drawerIcon: ({ size, color }) => (
-            <Ionicons name='mail' size={size} color='white' style={{marginTop:10}}/>
+            <Ionicons name='mail-outline' size={size} color={color} />
           ),
         }}
       />
