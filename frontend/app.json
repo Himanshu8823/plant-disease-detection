@@ -1,27 +1,40 @@
 {
   "expo": {
-    "name": "smartirrigationsystem",
-    "slug": "smartirrigationsystem",
-    "version": "1.0.0",
+    "name": "Plant Disease Detector Pro",
+    "slug": "plant-disease-detector-pro",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "plantdiseasedetector",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#4ade80"
     },
     "ios": {
-      "supportsTablet": true
-      
+      "supportsTablet": true,
+      "bundleIdentifier": "com.plantdiseasedetector.pro",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to camera to take photos of plants for disease detection.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to photo library to select plant images for disease detection.",
+        "NSLocationWhenInUseUsageDescription": "This app needs access to location to provide weather information and agricultural insights."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#4ade80"
       },
-      "package": "h.i.m.a.n.s.h.u"
+      "package": "com.plantdiseasedetector.pro",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.INTERNET"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -29,10 +42,23 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you select plant images for disease detection.",
+          "cameraPermission": "The app accesses your camera to let you take photos of plants for disease detection."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Plant Disease Detector Pro to use your location to provide weather information and agricultural insights."
+        }
+      ]
     ],
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": false
     },
     "extra": {
       "eas": {
