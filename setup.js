@@ -16,11 +16,13 @@ const question = (query) => new Promise((resolve) => rl.question(query, resolve)
 
 async function setup() {
   try {
-    console.log('📋 This setup will help you configure your environment variables.\n');
+    console.log('📋 This setup will help you configure your environment variables.');
+    console.log('Make sure you have your API keys ready before proceeding.\n');
 
     // Frontend Environment Variables
     console.log('🔧 Frontend Configuration (Expo)');
     console.log('----------------------------------');
+    console.log('Get these values from Firebase Console → Project Settings → General → Your apps → Web app\n');
     
     const frontendEnv = {
       EXPO_PUBLIC_FIREBASE_API_KEY: await question('Firebase API Key: '),
@@ -34,6 +36,7 @@ async function setup() {
 
     console.log('\n🔧 Backend Configuration (Node.js)');
     console.log('-----------------------------------');
+    console.log('Get Firebase Admin values from Firebase Console → Project Settings → Service Accounts → Generate new private key\n');
     
     const backendEnv = {
       PORT: await question('Backend Port (default: 5000): ') || '5000',
@@ -41,10 +44,10 @@ async function setup() {
       FIREBASE_PROJECT_ID: frontendEnv.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
       FIREBASE_CLIENT_EMAIL: await question('Firebase Client Email: '),
       FIREBASE_PRIVATE_KEY: await question('Firebase Private Key (with quotes): '),
-      JWT_SECRET: await question('JWT Secret (generate a random string): '),
-      KINDWISE_API_KEY: await question('Kindwise API Key: '),
-      GEMINI_API_KEY: await question('Google Gemini AI API Key: '),
-      OPENWEATHER_API_KEY: await question('OpenWeatherMap API Key: ')
+      JWT_SECRET: await question('JWT Secret (generate a random string, at least 32 characters): '),
+      KINDWISE_API_KEY: await question('Kindwise API Key (get from https://kindwise.com): '),
+      GEMINI_API_KEY: await question('Google Gemini AI API Key (get from https://makersuite.google.com/app/apikey): '),
+      OPENWEATHER_API_KEY: await question('OpenWeatherMap API Key (get from https://openweathermap.org/api): ')
     };
 
     // Create frontend .env file
@@ -71,6 +74,7 @@ async function setup() {
     console.log('2. Start development servers: npm run dev');
     console.log('3. Run on device: npm run ios or npm run android');
     console.log('\n📖 For more information, see README.md');
+    console.log('\n⚠️  IMPORTANT: Never commit .env files to version control!');
 
   } catch (error) {
     console.error('❌ Setup failed:', error.message);
