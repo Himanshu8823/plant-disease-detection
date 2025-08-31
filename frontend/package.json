@@ -49,8 +49,8 @@
     "react-native-screens": "~3.29.0",
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.10",
-    "react-native-weather": "^1.0.0",
-    "nativewind": "^2.0.11"
+    "nativewind": "^2.0.11",
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
