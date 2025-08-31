@@ -90,14 +90,45 @@ A comprehensive React Native Expo application for plant disease detection using 
 
 3. **Set up environment variables**
    ```bash
-   # Run the setup script
+   # Run the setup script (RECOMMENDED)
    npm run setup
    ```
    
-   This will guide you through entering:
-   - Firebase configuration
-   - API keys (Kindwise, Gemini, OpenWeatherMap)
-   - Backend server configuration
+   **OR manually create environment files:**
+   
+   **Frontend Environment File** (`frontend/.env`):
+   ```env
+   # Firebase Configuration
+   EXPO_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key_here
+   EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id_here
+   EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id_here
+   EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id_here
+   
+   # Backend API URL
+   EXPO_PUBLIC_BACKEND_URL=http://localhost:5000
+   ```
+   
+   **Backend Environment File** (`working-backend/.env`):
+   ```env
+   # Server Configuration
+   PORT=5000
+   NODE_ENV=development
+   
+   # Firebase Admin Configuration
+   FIREBASE_PROJECT_ID=your_project_id_here
+   FIREBASE_CLIENT_EMAIL=your_client_email_here
+   FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour private key here\n-----END PRIVATE KEY-----\n"
+   
+   # JWT Configuration
+   JWT_SECRET=your_jwt_secret_here
+   
+   # API Keys
+   KINDWISE_API_KEY=your_kindwise_api_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
+   OPENWEATHER_API_KEY=your_openweather_api_key_here
+   ```
 
 4. **Start the development servers**
    ```bash
@@ -123,51 +154,83 @@ A comprehensive React Native Expo application for plant disease detection using 
 
 ## 🔧 Configuration
 
-### Environment Variables
+### Environment Variables Setup
 
-#### Frontend (.env)
-```env
-EXPO_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id
-EXPO_PUBLIC_BACKEND_URL=http://localhost:5000
+#### **Option 1: Automated Setup (Recommended)**
+```bash
+npm run setup
 ```
+This will guide you through entering all required API keys and create both `.env` files automatically.
 
-#### Backend (.env)
-```env
-PORT=5000
-NODE_ENV=development
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_CLIENT_EMAIL=your_client_email
-FIREBASE_PRIVATE_KEY=your_private_key
-JWT_SECRET=your_jwt_secret
-KINDWISE_API_KEY=your_kindwise_api_key
-GEMINI_API_KEY=your_gemini_api_key
-OPENWEATHER_API_KEY=your_openweather_api_key
-```
+#### **Option 2: Manual Setup**
+
+1. **Create Frontend Environment File**
+   ```bash
+   # Navigate to frontend directory
+   cd frontend
+   
+   # Create .env file
+   touch .env
+   
+   # Edit with your values
+   nano .env  # or use any text editor
+   ```
+
+2. **Create Backend Environment File**
+   ```bash
+   # Navigate to working-backend directory
+   cd working-backend
+   
+   # Create .env file
+   touch .env
+   
+   # Edit with your values
+   nano .env  # or use any text editor
+   ```
 
 ### API Keys Setup
 
-1. **Firebase**
-   - Create a new Firebase project
-   - Enable Authentication and Firestore
-   - Download service account key for backend
-   - Get web app configuration for frontend
+#### **1. Firebase Configuration**
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Create a new project or select existing one
+3. Enable **Authentication** and **Firestore**
+4. Go to **Project Settings** → **General**
+5. Scroll down to **Your apps** section
+6. Click **Add app** → **Web app**
+7. Copy the configuration values for frontend
+8. For backend: Go to **Project Settings** → **Service Accounts** → **Generate new private key**
 
-2. **Kindwise API**
-   - Sign up at [Kindwise](https://kindwise.com)
-   - Get your API key from the dashboard
+#### **2. Kindwise API**
+1. Visit [Kindwise](https://kindwise.com)
+2. Sign up for an account
+3. Get your API key from the dashboard
 
-3. **Google Gemini AI**
-   - Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
-   - Create a new API key
+#### **3. Google Gemini AI**
+1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create a new API key
+3. Copy the key for the setup script
 
-4. **OpenWeatherMap**
-   - Sign up at [OpenWeatherMap](https://openweathermap.org/api)
-   - Get your API key
+#### **4. OpenWeatherMap**
+1. Sign up at [OpenWeatherMap](https://openweathermap.org/api)
+2. Get your free API key
+3. Note: Free tier has rate limits
+
+### Final Directory Structure
+```
+plant-disease-detector-pro/
+├── frontend/
+│   ├── .env                 ← FRONTEND ENVIRONMENT FILE
+│   ├── app/
+│   ├── assets/
+│   └── package.json
+├── working-backend/
+│   ├── .env                 ← BACKEND ENVIRONMENT FILE
+│   ├── routes/
+│   ├── server.js
+│   └── package.json
+├── package.json
+└── setup.js
+```
 
 ## 📁 Project Structure
 
@@ -190,6 +253,7 @@ plant-disease-detector-pro/
 │   │   ├── images/          # App images and icons
 │   │   ├── fonts/           # Custom fonts
 │   │   └── animations/      # Lottie animation files
+│   ├── .env                 # Frontend environment variables
 │   ├── app.json             # Expo configuration
 │   ├── package.json         # Frontend dependencies
 │   ├── tailwind.config.js   # Tailwind CSS configuration
@@ -206,6 +270,7 @@ plant-disease-detector-pro/
 │   │   └── contact.js       # Contact form API
 │   ├── middleware/          # Custom middleware
 │   ├── utils/               # Utility functions
+│   ├── .env                 # Backend environment variables
 │   ├── server.js            # Main server file
 │   ├── package.json         # Backend dependencies
 │   └── .env.example         # Backend environment template

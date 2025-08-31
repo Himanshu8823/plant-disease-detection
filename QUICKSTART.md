@@ -26,16 +26,48 @@ npm run install:all
 
 ### 2. Set Up Environment Variables
 
+#### **Option A: Automated Setup (Recommended)**
 ```bash
 # Run the automated setup script
 npm run setup
 ```
+This will guide you through entering all required API keys and create both `.env` files automatically.
 
-This will guide you through entering:
-- ✅ Firebase configuration
-- ✅ Kindwise API key (plant disease detection)
-- ✅ Google Gemini AI key (chat functionality)
-- ✅ OpenWeatherMap API key (weather data)
+#### **Option B: Manual Setup**
+
+**Frontend Environment File** (`frontend/.env`):
+```env
+# Firebase Configuration
+EXPO_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key_here
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id_here
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id_here
+EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id_here
+
+# Backend API URL
+EXPO_PUBLIC_BACKEND_URL=http://localhost:5000
+```
+
+**Backend Environment File** (`working-backend/.env`):
+```env
+# Server Configuration
+PORT=5000
+NODE_ENV=development
+
+# Firebase Admin Configuration
+FIREBASE_PROJECT_ID=your_project_id_here
+FIREBASE_CLIENT_EMAIL=your_client_email_here
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour private key here\n-----END PRIVATE KEY-----\n"
+
+# JWT Configuration
+JWT_SECRET=your_jwt_secret_here
+
+# API Keys
+KINDWISE_API_KEY=your_kindwise_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
+OPENWEATHER_API_KEY=your_openweather_api_key_here
+```
 
 ### 3. Start Development Servers
 
@@ -71,10 +103,13 @@ npm run web
 
 ### Firebase Setup
 1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Create a new project
+2. Create a new project or select existing one
 3. Enable **Authentication** and **Firestore**
-4. Add a web app to get configuration
-5. Go to Project Settings → Service Accounts → Generate new private key
+4. Go to **Project Settings** → **General**
+5. Scroll down to **Your apps** section
+6. Click **Add app** → **Web app**
+7. Copy the configuration values for frontend
+8. For backend: Go to **Project Settings** → **Service Accounts** → **Generate new private key**
 
 ### Kindwise API
 1. Visit [Kindwise](https://kindwise.com)
@@ -130,10 +165,12 @@ npm run reset                # Clean and reinstall
 ```
 plant-disease-detector-pro/
 ├── frontend/                 # React Native Expo app
+│   ├── .env                 ← FRONTEND ENVIRONMENT FILE
 │   ├── app/                 # All app screens
 │   ├── assets/              # Images, fonts, animations
 │   └── app.json             # Expo configuration
 ├── working-backend/         # Node.js backend
+│   ├── .env                 ← BACKEND ENVIRONMENT FILE
 │   ├── routes/              # API endpoints
 │   ├── middleware/          # Custom middleware
 │   └── server.js            # Main server file
@@ -172,6 +209,12 @@ npx expo start --clear
 - Verify all API keys are correctly set in `.env` files
 - Check API key permissions and quotas
 - Ensure keys are not expired
+
+**"Environment file not found"**
+- Make sure you created both `.env` files:
+  - `frontend/.env` for frontend configuration
+  - `working-backend/.env` for backend configuration
+- Run `npm run setup` to create them automatically
 
 ### Getting Help
 
