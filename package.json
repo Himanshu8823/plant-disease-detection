@@ -1,62 +1,49 @@
 {
-  "name": "smartirrigationsystem",
-  "main": "expo-router/entry",
-  "version": "1.0.0",
+  "name": "plant-disease-detector-pro",
+  "version": "2.0.0",
+  "description": "A comprehensive plant disease detection application with AI-powered analysis",
+  "main": "index.js",
   "scripts": {
-    "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "test": "jest --watchAll",
-    "lint": "expo lint"
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "start:frontend": "cd frontend && npm start",
+    "start:backend": "cd backend && npm run dev",
+    "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "cd frontend && npm test",
+    "test:backend": "cd backend && npm test",
+    "setup": "node setup.js",
+    "clean": "rm -rf node_modules frontend/node_modules backend/node_modules",
+    "reset": "npm run clean && npm run install:all"
   },
-  "jest": {
-    "preset": "jest-expo"
-  },
-  "dependencies": {
-    "@expo/config-plugins": "~8.0.0",
-    "@expo/prebuild-config": "~7.0.0",
-    "@expo/vector-icons": "^14.0.4",
-    "@react-native-async-storage/async-storage": "1.23.1",
-    "@react-native-community/masked-view": "^0.1.11",
-    "@react-navigation/drawer": "^6.7.2",
-    "@react-navigation/native": "^6.1.18",
-    "@react-navigation/native-stack": "^6.11.0",
-    "axios": "^1.7.7",
-    "expo": "^51.0.38",
-    "expo-constants": "~16.0.2",
-    "expo-font": "~12.0.9",
-    "expo-image-picker": "~15.0.7",
-    "expo-linking": "~6.3.1",
-    "expo-router": "^3.1.0",
-    "expo-splash-screen": "^0.27.6",
-    "expo-status-bar": "~1.12.1",
-    "expo-system-ui": "~3.0.7",
-    "expo-web-browser": "~13.0.3",
-    "express": "^4.21.0",
-    "firebase": "^10.14.0",
-    "lottie-react-native": "6.7.0",
-    "openai": "^4.63.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-native": "0.74.5",
-    "react-native-animatable": "^1.4.0",
-    "react-native-localize": "^3.2.1",
-    "react-native-reanimated": "~3.10.1",
-    "react-native-vector-icons": "^10.2.0",
-    "react-native-web": "~0.19.10"
-  },
+  "keywords": [
+    "plant",
+    "disease",
+    "detection",
+    "ai",
+    "machine-learning",
+    "react-native",
+    "nodejs",
+    "firebase",
+    "gemini",
+    "agriculture"
+  ],
+  "author": "Plant Disease Detector Team",
+  "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@types/jest": "^29.5.12",
-    "@types/react": "~18.2.45",
-    "@types/react-native-vector-icons": "^6.4.18",
-    "@types/react-test-renderer": "^18.0.7",
-    "jest": "^29.2.1",
-    "jest-expo": "~51.0.3",
-    "react-test-renderer": "18.2.0",
-    "typescript": "~5.3.3"
+    "concurrently": "^8.2.2"
   },
-  "private": true
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/plant-disease-detector-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/plant-disease-detector-pro/issues"
+  },
+  "homepage": "https://github.com/your-username/plant-disease-detector-pro#readme"
 }
