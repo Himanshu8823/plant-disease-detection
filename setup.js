@@ -9,89 +9,37 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-console.log('🌱 Plant Disease Detector Pro - Setup Script');
-console.log('===========================================\n');
+const question = (query) => new Promise((resolve) => rl.question(query, resolve));
 
-const questions = [
-  {
-    name: 'firebaseApiKey',
-    question: 'Enter your Firebase API Key: ',
-    required: true
-  },
-  {
-    name: 'firebaseAuthDomain',
-    question: 'Enter your Firebase Auth Domain: ',
-    required: true
-  },
-  {
-    name: 'firebaseProjectId',
-    question: 'Enter your Firebase Project ID: ',
-    required: true
-  },
-  {
-    name: 'firebaseStorageBucket',
-    question: 'Enter your Firebase Storage Bucket: ',
-    required: true
-  },
-  {
-    name: 'firebaseMessagingSenderId',
-    question: 'Enter your Firebase Messaging Sender ID: ',
-    required: true
-  },
-  {
-    name: 'firebaseAppId',
-    question: 'Enter your Firebase App ID: ',
-    required: true
-  },
-  {
-    name: 'kindwiseApiKey',
-    question: 'Enter your Kindwise API Key: ',
-    required: true
-  },
-  {
-    name: 'geminiApiKey',
-    question: 'Enter your Gemini AI API Key: ',
-    required: true
-  },
-  {
-    name: 'openweatherApiKey',
-    question: 'Enter your OpenWeatherMap API Key: ',
-    required: true
-  }
-];
+console.log(`
+🌱 Plant Disease Detector Pro - Setup Wizard
+============================================
 
-const answers = {};
+This script will help you configure your environment variables and API keys.
+Please have your API keys ready before proceeding.
 
-function askQuestion(index) {
-  if (index >= questions.length) {
-    createEnvFiles();
-    return;
-  }
+`);
 
-  const question = questions[index];
-  rl.question(question.question, (answer) => {
-    if (question.required && !answer.trim()) {
-      console.log('❌ This field is required. Please try again.\n');
-      askQuestion(index);
-      return;
-    }
-    
-    answers[question.name] = answer.trim();
-    askQuestion(index + 1);
-  });
-}
+async function setup() {
+  try {
+    // Frontend environment variables
+    console.log('\n📱 Frontend Configuration');
+    console.log('==========================\n');
 
-function createEnvFiles() {
-  console.log('\n📝 Creating environment files...\n');
+    const firebaseApiKey = await question('Firebase API Key: ');
+    const firebaseAuthDomain = await question('Firebase Auth Domain: ');
+    const firebaseProjectId = await question('Firebase Project ID: ');
+    const firebaseStorageBucket = await question('Firebase Storage Bucket: ');
+    const firebaseMessagingSenderId = await question('Firebase Messaging Sender ID: ');
+    const firebaseAppId = await question('Firebase App ID: ');
 
-  // Frontend .env
-  const frontendEnv = `# Firebase Configuration
-FIREBASE_API_KEY=${answers.firebaseApiKey}
-FIREBASE_AUTH_DOMAIN=${answers.firebaseAuthDomain}
-FIREBASE_PROJECT_ID=${answers.firebaseProjectId}
-FIREBASE_STORAGE_BUCKET=${answers.firebaseStorageBucket}
-FIREBASE_MESSAGING_SENDER_ID=${answers.firebaseMessagingSenderId}
-FIREBASE_APP_ID=${answers.firebaseAppId}
+    const frontendEnv = `# Firebase Configuration
+FIREBASE_API_KEY=${firebaseApiKey}
+FIREBASE_AUTH_DOMAIN=${firebaseAuthDomain}
+FIREBASE_PROJECT_ID=${firebaseProjectId}
+FIREBASE_STORAGE_BUCKET=${firebaseStorageBucket}
+FIREBASE_MESSAGING_SENDER_ID=${firebaseMessagingSenderId}
+FIREBASE_APP_ID=${firebaseAppId}
 
 # Backend API URL
 API_BASE_URL=http://localhost:5000
@@ -101,58 +49,98 @@ APP_NAME=Plant Disease Detector Pro
 APP_VERSION=2.0.0
 `;
 
-  // Backend .env
-  const backendEnv = `# Server Configuration
-NODE_ENV=development
-PORT=5000
-FRONTEND_URL=http://localhost:3000
+    // Backend environment variables
+    console.log('\n🔧 Backend Configuration');
+    console.log('=========================\n');
 
-# Firebase Configuration
-FIREBASE_PROJECT_ID=${answers.firebaseProjectId}
-FIREBASE_CLIENT_EMAIL=your-client-email@${answers.firebaseProjectId}.iam.gserviceaccount.com
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\nYour private key here\\n-----END PRIVATE KEY-----\\n"
+    const nodeEnv = await question('Node Environment (development/production) [development]: ') || 'development';
+    const port = await question('Server Port [5000]: ') || '5000';
+    const frontendUrl = await question('Frontend URL [http://localhost:3000]: ') || 'http://localhost:3000';
+
+    const firebasePrivateKey = await question('Firebase Private Key (from service account): ');
+    const firebaseClientEmail = await question('Firebase Client Email (from service account): ');
+
+    const kindwiseApiKey = await question('Kindwise API Key: ');
+    const geminiApiKey = await question('Google Gemini AI API Key: ');
+    const openweatherApiKey = await question('OpenWeatherMap API Key: ');
+
+    const jwtSecret = await question('JWT Secret (random string for token signing): ');
+    const encryptionKey = await question('Encryption Key (32-character random string): ');
+
+    const backendEnv = `# Server Configuration
+NODE_ENV=${nodeEnv}
+PORT=${port}
+FRONTEND_URL=${frontendUrl}
+
+# Firebase Admin
+FIREBASE_PROJECT_ID=${firebaseProjectId}
+FIREBASE_PRIVATE_KEY="${firebasePrivateKey}"
+FIREBASE_CLIENT_EMAIL=${firebaseClientEmail}
 
 # API Keys
-KINDWISE_API_KEY=${answers.kindwiseApiKey}
-GEMINI_API_KEY=${answers.geminiApiKey}
-OPENWEATHER_API_KEY=${answers.openweatherApiKey}
+KINDWISE_API_KEY=${kindwiseApiKey}
+GEMINI_API_KEY=${geminiApiKey}
+OPENWEATHER_API_KEY=${openweatherApiKey}
 
 # Security
-JWT_SECRET=your-jwt-secret-key-${Date.now()}
-ENCRYPTION_KEY=your-encryption-key-${Date.now()}
-
-# Database (if using external database)
-DATABASE_URL=your-database-url
-
-# Logging
-LOG_LEVEL=info
+JWT_SECRET=${jwtSecret}
+ENCRYPTION_KEY=${encryptionKey}
 `;
 
-  try {
-    // Create frontend .env
-    fs.writeFileSync('.env', frontendEnv);
-    console.log('✅ Created .env file in root directory');
+    // Create directories if they don't exist
+    const frontendDir = path.join(__dirname, 'frontend');
+    const backendDir = path.join(__dirname, 'backend');
 
-    // Create backend .env
-    const backendPath = path.join(__dirname, 'backend', '.env');
-    fs.writeFileSync(backendPath, backendEnv);
-    console.log('✅ Created .env file in backend directory');
+    if (!fs.existsSync(frontendDir)) {
+      fs.mkdirSync(frontendDir, { recursive: true });
+    }
+    if (!fs.existsSync(backendDir)) {
+      fs.mkdirSync(backendDir, { recursive: true });
+    }
 
-    console.log('\n🎉 Setup completed successfully!');
-    console.log('\n📋 Next steps:');
-    console.log('1. Download your Firebase service account key');
-    console.log('2. Update the FIREBASE_CLIENT_EMAIL and FIREBASE_PRIVATE_KEY in backend/.env');
-    console.log('3. Run "npm install" to install dependencies');
-    console.log('4. Start the backend: cd backend && npm run dev');
-    console.log('5. Start the frontend: npm start');
-    console.log('\n📚 For more information, check the README.md file');
+    // Write environment files
+    fs.writeFileSync(path.join(frontendDir, '.env'), frontendEnv);
+    fs.writeFileSync(path.join(backendDir, '.env'), backendEnv);
+
+    console.log('\n✅ Configuration Complete!');
+    console.log('==========================\n');
+
+    console.log('Environment files have been created:');
+    console.log('📁 frontend/.env');
+    console.log('📁 backend/.env\n');
+
+    console.log('Next steps:');
+    console.log('1. Install dependencies: npm run install:all');
+    console.log('2. Start development: npm run dev');
+    console.log('3. Open your app and start detecting plant diseases!\n');
+
+    console.log('📚 Documentation:');
+    console.log('- README.md - Complete setup guide');
+    console.log('- QUICKSTART.md - Quick start guide');
+    console.log('- API Documentation - Available in docs/ folder\n');
+
+    console.log('🔗 Useful Links:');
+    console.log('- Firebase Console: https://console.firebase.google.com/');
+    console.log('- Kindwise API: https://kindwise.com/');
+    console.log('- Google AI Studio: https://makersuite.google.com/app/apikey');
+    console.log('- OpenWeatherMap: https://openweathermap.org/api\n');
+
+    console.log('🚀 Happy coding! 🌱\n');
 
   } catch (error) {
-    console.error('❌ Error creating environment files:', error.message);
+    console.error('\n❌ Setup failed:', error.message);
+    process.exit(1);
+  } finally {
+    rl.close();
   }
-
-  rl.close();
 }
 
-// Start the setup process
-askQuestion(0);
+// Handle script interruption
+process.on('SIGINT', () => {
+  console.log('\n\n⚠️  Setup cancelled by user');
+  rl.close();
+  process.exit(0);
+});
+
+// Run setup
+setup();
